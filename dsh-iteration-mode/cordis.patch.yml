@@ -1,0 +1,157 @@
+# Iteration mode bundle: one `@deepseek-ai/dsh-agent-preset` declaration.
+#
+# `iterate` is Creator (`cordis`) plus the alignment gate: new sessions start in
+# plan mode, the plan section carries the grilling protocol, and the always-on
+# persona suffix names the rule. Profile patches may override this row's
+# `config.plugins` by id, exactly like a shipped preset.
+- insert:
+    - id: preset-iterate
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: iterate
+        name: 迭代模式
+        description: 先用 grilling 对齐需求，再迭代 DSH 本体或创建插件
+        order: 5
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: >-
+                You are a coding agent powered by the {{model}} model.
+              suffix: >-
+                Iteration mode: align before implementing. Never build an
+                unconfirmed wish — interview the user, settle the alignment
+                contract, get the plan approved, then change only what the plan
+                covers.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: tool-jobs
+            name: '@deepseek-ai/dsh-tool-jobs'
+          - id: tool-schedule
+            name: '@deepseek-ai/dsh-tool-schedule'
+          - id: command-goal
+            name: '@deepseek-ai/dsh-command-goal'
+          - id: tool-goal
+            name: '@deepseek-ai/dsh-tool-goal'
+          - id: planning
+            name: cordis:group
+            group: true
+            isolate:
+              planMode: true
+            config:
+              - id: plan-mode
+                name: '@deepseek-ai/dsh-plan-mode'
+                config:
+                  section: |
+                    You are in Iteration mode. Before any implementation you align requirements with the user: interview them about a design tree of decisions and turn the answers into a reviewed plan. Imperative language to implement means plan the implementation, not execute it. A conversational agreement — including an answer confirming something you asked — approves nothing and does not end plan mode; fold the confirmed decision into the plan and submit it through exit_plan_mode.
+
+                    Work in rounds. The design tree branches from the goal into decisions, and each decision branches into the decisions that hang off it. The frontier is every decision whose prerequisites are already settled: ask the whole frontier in one round, then wait for the answers before the next round. Never ask a question that an unsettled answer above it could change.
+
+                    Format each round exactly like this, in the user's language, separated by `---` between questions:
+
+                    ❓ **Q1** - **<title>**: <question body, with the options when there are options>
+
+                    ➡️ <your recommended answer>
+
+                    Number the questions continuously across rounds and recommend an answer for every one, so the user can reply "all as recommended".
+
+                    Finding facts is your job, never the user's. Read files, inspect live configuration with cordis_inspect_*, and consult the skill catalog before asking. Use ask_user_question only for decisions the environment cannot settle. Never ask the user where code or configuration lives, or how current behavior works, when you can find out.
+
+                    Do not edit or write files, change configuration, install or remove plugins, run mutating commands, or otherwise carry out the plan while in plan mode. The tool catalog stays the same, so read-only bash is acceptable for inspection only; anything that changes state waits for approval.
+
+                    Interview until the frontier is empty: every branch visited, nothing silently assumed, every rejected option recorded. Then present the alignment contract as a normal message: goal and scope, confirmed decisions, rejected options, assumptions, acceptance criteria, and what is out of scope. Keep it short enough to check line by line and complete enough that no design decision is left to implementation.
+
+                    When the contract is settled, call exit_plan_mode with the complete plan markdown starting with a `#` title: the contract plus the implementation steps, verification, and rollback. Make exit_plan_mode the only and final tool call in that assistant response. If the review rejects it, fold the feedback into the tree and present again. Do not ask "should I proceed?" in prose or through ask_user_question.
+
+                    After approval, implement exactly the approved plan, verify the result on the real surface (rebuild what the change needs, refresh the page, and confirm it reflects the change), and report what changed. A change of scope needs a new alignment round, not a quiet addition.
+              - id: iteration-plan-gate
+                name: '@tanlinfeng/dsh-iteration-mode'
+          - id: compaction
+            name: cordis:group
+            group: true
+            isolate:
+              compaction: true
+              toolResultPruner: true
+            config:
+              - id: compaction-basic
+                name: '@deepseek-ai/dsh-compaction-basic'
+              - id: command-compact
+                name: '@deepseek-ai/dsh-command-compact'
+              - id: tool-result-pruner
+                name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+                config:
+                  thresholdChars: 8192
+                  headChars: 4096
+                  tailChars: 1024
+          - id: delegation
+            name: cordis:group
+            group: true
+            isolate:
+              workflowEngine: true
+            config:
+              - id: tool-subagent-control
+                name: '@deepseek-ai/dsh-tool-subagent-control'
+              - id: tool-subagent-list-agents
+                name: '@deepseek-ai/dsh-tool-subagent-control/list-agents'
+              - id: tool-subagent
+                name: '@deepseek-ai/dsh-tool-subagent'
+                config:
+                  provider: spawn
+                  toolName: subagent
+                  modelSelectionSettings: true
+              - id: tool-subagent-fork
+                name: '@deepseek-ai/dsh-tool-subagent'
+                config:
+                  provider: fork
+                  toolName: subagent_fork
+              - id: workflow-ptc
+                name: '@deepseek-ai/dsh-workflow-ptc'
+                config:
+                  provider: spawn
+              - id: tool-workflow
+                name: '@deepseek-ai/dsh-tool-workflow'
+          - id: tool-ask-user
+            name: '@deepseek-ai/dsh-tool-ask-user'
+          - id: tool-todo
+            name: '@deepseek-ai/dsh-tool-todo'
+            config:
+              allowParallelInProgress: true
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+          - id: tool-cordis
+            name: '@deepseek-ai/dsh-tool-cordis'
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+            config:
+              customSkillDirs:
+                - !!js process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('@deepseek-ai/dsh-agent-preset/package.json')), 'skills')
+                - !!js process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('@tanlinfeng/dsh-iteration-mode/package.json')), 'skills')
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: present
+            name: '@deepseek-ai/dsh-tool-present'
+          - id: tool-plugin-manager
+            name: '@deepseek-ai/dsh-plugin-manager/tools'
+            disabled: !!js "!ctx.get('profileContext')"
+          - id: tool-plugin-market
+            name: '@deepseek-ai/dsh-plugin-market/tools'
+            disabled: !!js "!ctx.get('profileContext')"

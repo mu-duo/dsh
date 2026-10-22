@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Multi-agent",
+    "description": "Define subagent roles, models, and parallel limits, and watch runs from the right Sidebar."
+  }
+}

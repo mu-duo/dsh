@@ -1,0 +1,39 @@
+{
+  "name": "@tanlinfeng/dsh-iteration-mode",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Iteration mode: grill requirements into a reviewed plan, then iterate DSH itself or create plugins.",
+  "license": "MIT",
+  "author": "tanlinfeng",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness"
+  ],
+  "homepage": "https://github.com/tanlinfeng/dsh-plugins/tree/main/dsh-iteration-mode",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanlinfeng/dsh-plugins.git",
+    "directory": "dsh-iteration-mode"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "skills"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

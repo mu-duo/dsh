@@ -1,0 +1,55 @@
+{
+  "name": "@tanlinfeng/dsh-multi-agent",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Role-based subagent orchestration over the built-in subagent service, with a right-Sidebar roster and per-role settings on the bundle page.",
+  "license": "MIT",
+  "author": "tanlinfeng",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness"
+  ],
+  "homepage": "https://github.com/tanlinfeng/dsh-plugins/tree/main/multi-agent-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanlinfeng/dsh-plugins.git",
+    "directory": "multi-agent-plugin"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "store.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-commands",
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# Multi-agent bundle: one Host row that owns role definitions, the role-aware
+# `delegate` tool, the authenticated roster route, and the browser halves
+# (right-Sidebar roster + bundle-page settings) declared through
+# package.json's `dsh.client`.
+- insert:
+    - id: multi-agent
+      name: '@tanlinfeng/dsh-multi-agent'

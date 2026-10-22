@@ -1,0 +1,28 @@
+{
+  "format": 1,
+  "title": {
+    "en": "tanlinfeng DSH plugins",
+    "zh": "tanlinfeng 的 DSH 插件"
+  },
+  "description": {
+    "en": "Sidebar, task and agent-orchestration plugins for DeepSeek Harness.",
+    "zh": "供 DeepSeek Harness 使用的侧栏、任务与智能体编排插件。"
+  },
+  "metadata": {
+    "categories": {
+      "ui": {
+        "title": {
+          "en": "Interface",
+          "zh": "界面"
+        }
+      },
+      "agents": {
+        "title": {
+          "en": "Agents",
+          "zh": "智能体"
+        }
+      }
+    }
+  },
+  "plugins": []
+}

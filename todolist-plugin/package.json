@@ -1,0 +1,51 @@
+{
+  "name": "@tanlinfeng/dsh-todolist",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Shared TodoList panel whose tasks agents claim and execute.",
+  "license": "MIT",
+  "author": "tanlinfeng",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness"
+  ],
+  "homepage": "https://github.com/tanlinfeng/dsh-plugins/tree/main/todolist-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanlinfeng/dsh-plugins.git",
+    "directory": "todolist-plugin"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  }
+}

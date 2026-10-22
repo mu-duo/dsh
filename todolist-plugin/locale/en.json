@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TodoList",
+    "description": "A shared todo list whose pending tasks agents claim and execute in their sessions."
+  }
+}

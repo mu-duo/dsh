@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Side question">
+  <defs>
+    <linearGradient id="btw-bg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#E0E7FF"/>
+    </linearGradient>
+    <linearGradient id="btw-fill" x1="18" y1="16" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#btw-bg)"/>
+  <path d="M17 17h30a8 8 0 0 1 8 8v12a8 8 0 0 1-8 8H31l-11 8v-8h-3a8 8 0 0 1-8-8V25a8 8 0 0 1 8-8z" fill="url(#btw-fill)"/>
+  <path d="M27.5 29.8c.2-2.6 2-4.3 4.8-4.3 2.9 0 4.8 1.8 4.8 4.3 0 1.8-.9 2.9-2.8 4.1-1.7 1.1-2.3 1.9-2.3 3.4v.7" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="32" cy="42.6" r="1.9" fill="#FFFFFF"/>
+  <path d="M48 12l1.1 2.9L52 16l-2.9 1.1L48 20l-1.1-2.9L44 16l2.9-1.1L48 12z" fill="#A5B4FC"/>
+</svg>

@@ -1,0 +1,56 @@
+{
+  "name": "@tanlinfeng/dsh-btw",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Side-question chat in the right sidebar that reads the current session without writing to it.",
+  "license": "MIT",
+  "author": "tanlinfeng",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness"
+  ],
+  "homepage": "https://github.com/tanlinfeng/dsh-plugins/tree/main/dsh-btw",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanlinfeng/dsh-plugins.git",
+    "directory": "dsh-btw"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "context.js",
+    "prompt.js",
+    "tools.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-commands",
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ]
+    }
+  }
+}
